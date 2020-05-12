@@ -1,0 +1,12 @@
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/bin/release/netcoreapp3.1/func_WithCDK.deps.json
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/bin/release/netcoreapp3.1/func_WithCDK.runtimeconfig.json
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/bin/release/netcoreapp3.1/func_WithCDK.runtimeconfig.dev.json
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/bin/release/netcoreapp3.1/func_WithCDK.dll
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/bin/release/netcoreapp3.1/func_WithCDK.pdb
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/obj/release/netcoreapp3.1/func_WithCDK.csprojAssemblyReference.cache
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/obj/release/netcoreapp3.1/func_WithCDK.csproj.CoreCompileInputs.cache
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/obj/release/netcoreapp3.1/func_WithCDK.AssemblyInfoInputs.cache
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/obj/release/netcoreapp3.1/func_WithCDK.AssemblyInfo.cs
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/obj/release/netcoreapp3.1/func_WithCDK.dll
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/obj/release/netcoreapp3.1/func_WithCDK.pdb
+/home/srknbngl/001_repos/dotnet-lambda-demo/src/func_WithCDK/src/func_WithCDK/obj/release/netcoreapp3.1/func_WithCDK.genruntimeconfig.cache

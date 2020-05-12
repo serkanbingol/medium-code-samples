@@ -1,0 +1,294 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree"
+      },
+      "DotnetLambdaDemoStack": {
+        "id": "DotnetLambdaDemoStack",
+        "path": "DotnetLambdaDemoStack",
+        "children": {
+          "demoS3": {
+            "id": "demoS3",
+            "path": "DotnetLambdaDemoStack/demoS3",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "DotnetLambdaDemoStack/demoS3/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "bucketName": "serverless-inventory-app-s3-bucket"
+                  }
+                }
+              },
+              "Notifications": {
+                "id": "Notifications",
+                "path": "DotnetLambdaDemoStack/demoS3/Notifications",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "DotnetLambdaDemoStack/demoS3/Notifications/Resource"
+                  }
+                }
+              }
+            }
+          },
+          "demoFuncS3": {
+            "id": "demoFuncS3",
+            "path": "DotnetLambdaDemoStack/demoFuncS3",
+            "children": {
+              "ServiceRole": {
+                "id": "ServiceRole",
+                "path": "DotnetLambdaDemoStack/demoFuncS3/ServiceRole",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "DotnetLambdaDemoStack/demoFuncS3/ServiceRole/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              },
+              "Code": {
+                "id": "Code",
+                "path": "DotnetLambdaDemoStack/demoFuncS3/Code",
+                "children": {
+                  "Stage": {
+                    "id": "Stage",
+                    "path": "DotnetLambdaDemoStack/demoFuncS3/Code/Stage"
+                  },
+                  "AssetBucket": {
+                    "id": "AssetBucket",
+                    "path": "DotnetLambdaDemoStack/demoFuncS3/Code/AssetBucket"
+                  }
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "DotnetLambdaDemoStack/demoFuncS3/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Function",
+                  "aws:cdk:cloudformation:props": {
+                    "code": {
+                      "s3Bucket": {
+                        "Ref": "AssetParameters2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bbS3Bucket71121D33"
+                      },
+                      "s3Key": {
+                        "Fn::Join": [
+                          "",
+                          [
+                            {
+                              "Fn::Select": [
+                                0,
+                                {
+                                  "Fn::Split": [
+                                    "||",
+                                    {
+                                      "Ref": "AssetParameters2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bbS3VersionKeyF0007CDD"
+                                    }
+                                  ]
+                                }
+                              ]
+                            },
+                            {
+                              "Fn::Select": [
+                                1,
+                                {
+                                  "Fn::Split": [
+                                    "||",
+                                    {
+                                      "Ref": "AssetParameters2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bbS3VersionKeyF0007CDD"
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        ]
+                      }
+                    },
+                    "handler": "func_WithCDK::func_WithCDK.Function::FunctionHandler",
+                    "role": {
+                      "Fn::GetAtt": [
+                        "demoFuncS3ServiceRoleEE68F489",
+                        "Arn"
+                      ]
+                    },
+                    "runtime": "dotnetcore3.1",
+                    "functionName": "serverless-inventory-app-s3-func"
+                  }
+                }
+              },
+              "AllowBucketNotificationsFromDotnetLambdaDemoStackdemoS3A9E873A4": {
+                "id": "AllowBucketNotificationsFromDotnetLambdaDemoStackdemoS3A9E873A4",
+                "path": "DotnetLambdaDemoStack/demoFuncS3/AllowBucketNotificationsFromDotnetLambdaDemoStackdemoS3A9E873A4",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Lambda::Permission",
+                  "aws:cdk:cloudformation:props": {
+                    "action": "lambda:InvokeFunction",
+                    "functionName": {
+                      "Fn::GetAtt": [
+                        "demoFuncS3DADFBA78",
+                        "Arn"
+                      ]
+                    },
+                    "principal": "s3.amazonaws.com",
+                    "sourceAccount": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "sourceArn": {
+                      "Fn::GetAtt": [
+                        "demoS3A195AEAA",
+                        "Arn"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "AssetParameters": {
+            "id": "AssetParameters",
+            "path": "DotnetLambdaDemoStack/AssetParameters",
+            "children": {
+              "2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bb": {
+                "id": "2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bb",
+                "path": "DotnetLambdaDemoStack/AssetParameters/2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bb",
+                "children": {
+                  "S3Bucket": {
+                    "id": "S3Bucket",
+                    "path": "DotnetLambdaDemoStack/AssetParameters/2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bb/S3Bucket"
+                  },
+                  "S3VersionKey": {
+                    "id": "S3VersionKey",
+                    "path": "DotnetLambdaDemoStack/AssetParameters/2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bb/S3VersionKey"
+                  },
+                  "ArtifactHash": {
+                    "id": "ArtifactHash",
+                    "path": "DotnetLambdaDemoStack/AssetParameters/2e14c666ed16b2234e900a842f1a5903f212bbb0b79529060c223a966b1076bb/ArtifactHash"
+                  }
+                }
+              }
+            }
+          },
+          "BucketNotificationsHandler050a0587b7544547bf325f094a3db834": {
+            "id": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
+            "path": "DotnetLambdaDemoStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "DotnetLambdaDemoStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "DotnetLambdaDemoStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "lambda.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "DotnetLambdaDemoStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "DotnetLambdaDemoStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": "s3:PutBucketNotification",
+                                  "Effect": "Allow",
+                                  "Resource": "*"
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36",
+                            "roles": [
+                              {
+                                "Ref": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "DotnetLambdaDemoStack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
